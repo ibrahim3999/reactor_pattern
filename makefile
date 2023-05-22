@@ -1,25 +1,23 @@
-# Makefile
-
 CC = gcc
-CFLAGS = -Wall -Wextra
-LDFLAGS =
-
-# Source files
-SERVER_SRC = st_reactor.c
-
-# Object files
+CFLAGS = -Wall -Wextra -g
+LDFLAGS = -pthread
+ST_REACTOR_SRC = st_reactor.c
+ST_REACTOR_OBJ = $(ST_REACTOR_SRC:.c=.o)
+SERVER_SRC = server.c
 SERVER_OBJ = $(SERVER_SRC:.c=.o)
 
-# Executables
-SERVER_EXEC = react_server
+all: server
 
-all: $(SERVER_EXEC)
+server: $(SERVER_OBJ) $(ST_REACTOR_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS) -ldl
 
-$(SERVER_EXEC): $(SERVER_OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
-%.o: %.c
+$(SERVER_OBJ): $(SERVER_SRC)
 	$(CC) $(CFLAGS) -c $<
 
+$(ST_REACTOR_OBJ): $(ST_REACTOR_SRC)
+	$(CC) $(CFLAGS) -fPIC -c $<
+
 clean:
-	rm -f  $(SERVER_EXEC)  $(SERVER_OBJ)
+	rm -f $(SERVER_OBJ) $(ST_REACTOR_OBJ) server
+
+.PHONY: all clean
