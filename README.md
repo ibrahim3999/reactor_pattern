@@ -9,3 +9,6 @@ To compile and run the code, you need a C compiler and the necessary development
 ## Getting Started
 
 1. Clone the repository or download the source code files.
+
+2. make all
+3. ./react_server
