@@ -1,8 +1,7 @@
-
 #include "st_reactor.h"
 
 #define BUFFER_SIZE 1024
-#define PORT 6810
+#define PORT 3490
 
 int main() {
     int server_socket, current_client;
